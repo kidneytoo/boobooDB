@@ -2,22 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-// var mysql = require('mysql')
-// var net = require('net');
-// var connection = mysql.createConnection({
-//   host     : '127.0.0.1',
-//   user     : 'root',
-//   password : '1849900299',
-//   database : 'boobooDB'
-// })
-
-// connection.connect(function(err) {
-//   if (err) throw err
-//   console.log('You are now connected...')
-// })
-
-
-
 
 class Home extends React.Component {
 	render() {
@@ -28,10 +12,6 @@ class Home extends React.Component {
 		);
 	}
 }
-
-
-
-
 
 
 
