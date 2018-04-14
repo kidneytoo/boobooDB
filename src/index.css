@@ -1,0 +1,80 @@
+body {
+	font-size: 1rem;
+	font-weight: 300;
+	font-family: 'Prompt', sans-serif;
+	width: 100vw;
+}
+
+h4 {
+	margin: 0px;
+}
+
+td {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.regAll {
+	display: flex;
+	display: -webkit-flex;
+	justify-content: space-between;
+	flex-flow: row;
+}
+
+.menuBar {
+	background: pink;
+	width: 30vw;
+	height: 100vh;
+	text-align: center;
+}
+
+.menuChoice {
+	display: flex;
+	display: -webkit-flex;
+	justify-content: center;
+	flex-flow: column;
+}
+
+.homeContainer {
+	text-align: center;
+	width: 70vw;
+}
+
+.registerContainer {
+	text-align: center;
+	width: 70vw;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: center;
+	flex-flow: column;
+}
+
+.registerFill {
+	text-align: center;
+	align-self: center;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: center;
+	flex-flow: column;
+}
+
+.registTable {
+	align-self: center;
+}
+
+.registRow {
+	text-align: center;
+	align-self: center;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: center;
+	flex-flow: row;
+}
+
+.sectionf {
+	width: 25px;
+}
+
+.sectionl {
+	width: 25px;
+}
