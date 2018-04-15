@@ -65,6 +65,12 @@ export default class Register extends React.Component {
   	}
 
   	handleSubmit = (evt) => {
+			$.post('http://localhost:8888/send', this.state , function(data , status){
+			  console.log('data: ' + data + ', status: ' + status);
+			  alert('From server => data: ' + data + ', status: ' + status);
+			});
+
+
     	const { studentID, registSubject } = this.state;
     	alert(`รหัสนิสิต ${studentID} ลงทะเบียนทั้งหมด ${registSubject.length} วิชา มีดังนี้`);
     	this.props.changeWindow(<RegistConfirm studentID={this.state.studentID} registSubject={this.state.registSubject} backWindow={this.props.backWindow} updateState={this.updateState} goHome={this.props.goHome} />);
