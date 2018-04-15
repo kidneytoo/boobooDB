@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import RegistConfirm from './RegistConfirm'
-
+import RegistConfirm from './RegistConfirm';
+import $ from 'jquery';
 
 export default class Register extends React.Component {
 	constructor(props) {
