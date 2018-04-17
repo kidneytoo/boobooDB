@@ -44,9 +44,11 @@ export default class Login extends React.Component {
 
 		//ดึง database มา check password
 		alert('http://localhost:8888/checkAuthentificate/' + this.state.person);
+		var ch = false;
 		$.post('http://localhost:8888/checkAuthentificate/' + this.state.person, this.state , function(data , status){
 			console.log('checkAunthentification data: ' + data + ', status: ' + status);
 			if(data == "Login successful"){
+				ch = true;
 				alert("Login successful");
 			}
 			else{
@@ -54,22 +56,6 @@ export default class Login extends React.Component {
 				// relogin not change page***
 			}
 		});
-
-		// jQuery.ajax({
-    //     type: "POST",
-    //     async: true,
-    //     url: 'http://localhost:8888/checkAuthentificate/' + this.state.person,
-    //     data:  this.state,
-    //     dataType: "json",
-    //     contentType: "application/json; charset=utf-8",
-    //     success: function(data , status) {
-		// 			alert('From server => data: ' + data + ', status: ' + status);
-		// 			console.log('checkAunthentification data: ' + data + ', status: ' + status);
-		// 		},
-    //     error: function (err)
-    //     { alert(err.responseText)}
-    // });
-
 		this.goToStudent();
 	}
 

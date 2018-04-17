@@ -40,6 +40,7 @@ export default class RegistConfirm extends React.Component {
 
 		//บันทึกรายการลง Database
 
+
 		this.props.setInit();
 		this.props.goHome();
 	};
@@ -62,7 +63,7 @@ export default class RegistConfirm extends React.Component {
 								<td><h4>{idx+1}</h4></td>
 								<td>{registSubj.subjectID}</td>
 								<td>{registSubj.section.join()}</td>
-							</tr>			
+							</tr>
 						))}
 					</tbody>
 				</table>
