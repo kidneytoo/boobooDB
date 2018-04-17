@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "cors": "^2.8.4",
     "express": "^4.16.3",
+    "history": "^4.7.2",
     "jquery": "^3.3.1",
     "mysql": "github:mysqljs/mysql",
     "react": "^16.3.1",
