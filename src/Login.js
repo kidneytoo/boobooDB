@@ -4,7 +4,13 @@ import createHistory from "history/createBrowserHistory"
 import App from './App'
 import $ from 'jquery'
 
-const history = createHistory()
+var studentLogin = null;
+function goToStudent(e) {
+	ReactDOM.render(
+  			<App studentID={studentLogin}/>,
+  			document.getElementById('root')
+		);
+}
 
 export default class Login extends React.Component {
 	constructor(props) {
@@ -29,12 +35,12 @@ export default class Login extends React.Component {
 	}
 
 
-	goToStudent = (e) => {
-		ReactDOM.render(
-  			<App studentID={this.state.studentID}/>,
-  			document.getElementById('root')
-		);
-	}
+	// goToStudent = (e) => {
+	// 	ReactDOM.render(
+ //  			<App studentID={this.state.studentID}/>,
+ //  			document.getElementById('root')
+	// 	);
+	// }
 
 	goToStaff = () => {
 
@@ -43,30 +49,25 @@ export default class Login extends React.Component {
 	checkAuthentificate = () => {
 
 		//ดึง database มา check password
-		alert('http://localhost:8888/checkAuthentificate/' + this.state.person);
-		var ch = false;
+		studentLogin = this.state.studentID;
+		// alert('http://localhost:8888/checkAuthentificate/' + this.state.person);
 		$.post('http://localhost:8888/checkAuthentificate/' + this.state.person, this.state , function(data , status){
 			console.log('checkAunthentification data: ' + data + ', status: ' + status);
 			if(data == "Login successful"){
-				ch = true;
-				alert("Login successful");
+				goToStudent();
 			}
 			else{
-				alert("Incorrect username or password")
-				// relogin not change page***
+				alert("Incorrect username or password");
 			}
 		});
-		this.goToStudent();
 	}
 
 
 
 	render() {
-
-
 		return(
 			<div className='loginContainer'>
-				<form onSubmit={this.checkAuthentificate}>
+				<form>
 					<div>
 						<label for="sid">รหัสประจำตัว</label>
 						<input value={this.state.studentID} onChange={this.handleStudentIDchange} className="sid" type="text" placeholder="10 หลัก" required></input>
@@ -81,7 +82,7 @@ export default class Login extends React.Component {
 							<option value="staff">เจ้าหน้าที่</option>
 							</select>
 					</div>
-					<div><button type="submit" className="small" onclick={this.checkAuthentificate}>เข้าสู่ระบบ</button></div>
+					<div><button type="button" className="small" onClick={this.checkAuthentificate}>เข้าสู่ระบบ</button></div>
 				</form>
 			</div>
 		);
