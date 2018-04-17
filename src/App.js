@@ -5,19 +5,13 @@ import Home from './page/Home';
 import AddSubject from './page/AddSubject';
 import RegistConfirm from './page/RegistConfirm'
 
-// function goHome() {
-// 	this.setState({
-// 			window: <Home />,
-// 			prev_window: <Home />
-// 		});
-// }
-
 export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			window: <Home />,
-			prev_window:  <Home />
+			studentID: this.props.studentID,
+			window: <Home studentID={this.props.studentID}/>,
+			prev_window:  <Home studentID={this.props.studentID}/>
 		};
 
 	}
@@ -40,8 +34,8 @@ export default class App extends React.Component {
 	goHome = () => {
 		alert('ทำรายการเรียบร้อย');
 		this.setState({
-			window: <Home />,
-			prev_window: <Home />
+			window: <Home studentID={this.props.studentID}/>,
+			prev_window: <Home studentID={this.props.studentID}/>
 		});
 	};
 
@@ -53,7 +47,7 @@ export default class App extends React.Component {
 					<h1>BooBooDB</h1>
 					<p>ระบบลงทะเบียนเรียนออนไลน์ของจุฬาฯ</p>
 					<div className = 'menuChoice'>
-						<button onClick={() => this.changeWindow(<Register changeWindow={this.changeWindow} backWindow={this.backWindow} goHome={this.goHome}/>)}>ลงทะเบียนเรียน</button>
+						<button onClick={() => this.changeWindow(<Register changeWindow={this.changeWindow} studentID={this.state.studentID} backWindow={this.backWindow} goHome={this.goHome}/>)}>ลงทะเบียนเรียน</button>
 						<button onClick={() => this.changeWindow(<AddSubject />)}>เพิ่มรายวิชา/เปลี่ยนตอนเรียน</button>
 					</div>
 				</div>

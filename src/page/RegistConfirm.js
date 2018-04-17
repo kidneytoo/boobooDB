@@ -40,7 +40,7 @@ export default class RegistConfirm extends React.Component {
 
 		//บันทึกรายการลง Database
 
-		alert(`ลงทะเบียนเรียบร้อย`);
+		this.props.setInit();
 		this.props.goHome();
 	};
 

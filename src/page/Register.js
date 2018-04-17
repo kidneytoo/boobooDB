@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import RegistConfirm from './RegistConfirm';
+import RegistConfirm from './RegistConfirm'
 import $ from 'jquery';
+
+var studID = '';
+var registSj = [{subjectID:'',sectionf:null,oper:"only",sectionl:null}]; 
 
 export default class Register extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			studentID: '',
-			registSubject: [{subjectID:'',sectionf:null,oper:"only",sectionl:null}],
+			studentID: this.props.studentID,
+			registSubject: registSj,
 		};
 	}
 
@@ -65,18 +68,20 @@ export default class Register extends React.Component {
   	}
 
   	handleSubmit = (evt) => {
-			$.post('http://localhost:8888/send', this.state , function(data , status){
+  		$.post('http://localhost:8888/send', this.state , function(data , status){
 			  console.log('data: ' + data + ', status: ' + status);
 			  alert('From server => data: ' + data + ', status: ' + status);
 			});
 
-
-    	const { studentID, registSubject } = this.state;
-    	alert(`รหัสนิสิต ${studentID} ลงทะเบียนทั้งหมด ${registSubject.length} วิชา มีดังนี้`);
-    	this.props.changeWindow(<RegistConfirm studentID={this.state.studentID} registSubject={this.state.registSubject} backWindow={this.props.backWindow} updateState={this.updateState} goHome={this.props.goHome} />);
+    	studID = this.state.studentID;
+    	registSj = this.state.registSubject;
+    	this.props.changeWindow(<RegistConfirm studentID={this.state.studentID} registSubject={this.state.registSubject} backWindow={this.props.backWindow} updateState={this.updateState} goHome={this.props.goHome} setInit={this.setInit} />);
   	}
 
-
+  	setInit = () => {
+		studID = '';
+		registSj = [{subjectID:'',sectionf:null,oper:"only",sectionl:null}];
+  	}
 
 	render() {
 		return (
@@ -84,8 +89,7 @@ export default class Register extends React.Component {
 				<h1>ลงทะเบียนเรียน</h1>
 				<form onSubmit={this.handleSubmit}>
 					<div>
-						<label for="sid">รหัสนิสิต</label>
-						<input value={this.state.studentID} onChange={this.handleStudentIDchange} className="sid" type="text" placeholder="10 หลัก" required></input>
+						<p>{this.state.studentID}</p>
 					</div>
 					<div className='registerFill'>
 						<div className='registTable'>
