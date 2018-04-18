@@ -60,7 +60,11 @@ function calculateSection(regSubj) {
 							if(checkSec(j))
 								sect.push(j)
 						}
-
+					}
+					else if(oper == 'all'){
+						sectionExisting.forEach((secObj) => {
+							sect.push(secObj.sec_no);
+						})
 					}
 
 					console.log(sect);
@@ -72,7 +76,7 @@ function calculateSection(regSubj) {
 			})(i);
 		}
 		resolve("success");
-	}).then((successMeg) => {
+	}).then((successMsg) => {
 		console.log(registSubject_after);
 		return registSubject_after;
 	})
