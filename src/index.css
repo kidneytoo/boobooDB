@@ -99,3 +99,12 @@ td {
 .registConfirmTable {
 	align-self: center;
 }
+
+.registWaitContainer {
+	text-align: center;
+	width: 70vw;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: center;
+	flex-flow: column;
+}
