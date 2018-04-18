@@ -20,16 +20,21 @@ function calculateSection(regSubj) {
 
 			await (async (i) => {
 				try{
-					var subject = registSubject_before[i].subjectID;
+					var subjectID = registSubject_before[i].subjectID;
 					var oper = registSubject_before[i].oper;
 					var sectionf = parseInt(registSubject_before[i].sectionf);
 					var sectionl = parseInt(registSubject_before[i].sectionl);
 					var sectionExisting;
 					var sect = [];
+					var subjName = (await axios.post('http://localhost:8888/student/register/reqSubjectName', {"subjectID":subjectID})).data.data; //ชื่อวิชา
+					console.log("subjName");
+					console.log(subjName);
+					// console.log(subjName.data);
 
-					var response = await axios.post('http://localhost:8888/student/register/req', {"subject":registSubject_before[i].subjectID});
+					var response = await axios.post('http://localhost:8888/student/register/reqAllSection', {"subjectID":subjectID});
 
 					console.log('req_allSection success - data:');
+					console.log(response);
 					sectionExisting = response.data.data ;
 					console.log(sectionExisting);
 					console.log(response.data.msg);
@@ -59,7 +64,7 @@ function calculateSection(regSubj) {
 					}
 
 					console.log(sect);
-					registSubject_after.push({subjectID:subject,section:sect});
+					registSubject_after.push({subjectID:subjectID,section:sect,subjectName:subjName});
 
 				} catch(e){
 					console.log("Catch in reqAllSection")
@@ -113,6 +118,7 @@ export default class RegistConfirm extends React.Component {
 			<thead>
 			<td>ลำดับ</td>
 			<td>รหัสวิชา</td>
+			<td>รหัสวิชา</td>
 			<td>Section</td>
 			</thead>
 			<tbody>
@@ -120,6 +126,7 @@ export default class RegistConfirm extends React.Component {
 				<tr>
 				<td><h4>{idx+1}</h4></td>
 				<td>{registSubj.subjectID}</td>
+				<td>{registSubj.subjectName}</td>
 				<td>{registSubj.section.join()}</td>
 				</tr>
 			))}

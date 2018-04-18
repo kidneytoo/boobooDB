@@ -2,11 +2,38 @@ var app = require('express')
 var router = app.Router();
 var { con } = require('../server');
 
-router.post('/register/req', function (req, res){
-  console.log("in request all section process");
-  var regSubj = req.body.subject;
+router.post('/register/reqSubjectName', function (req, res){
+  var subjID = req.body.subjectID;
 
-  var sql = "SELECT sec_no FROM section WHERE cid='" + regSubj + "'";
+  var sql = "SELECT cname FROM course WHERE cid='" + subjID + "'";
+  console.log("SQL: " + sql);
+
+  con.query(sql, function (err, result, field) {
+    console.log("INNNNNNNN");
+    if (err){
+      console.log("ERROR");
+      throw err;
+    }
+    console.log(result[0].cname);
+    if(result.length == 0){
+      console.log("There is no this subject");
+      res.send({"msg" : "There is no this subject"});
+    }
+    else{
+      console.log("success");
+      res.send({  "msg" : "success" ,
+                  "data" : result[0].cname
+                });
+    }
+  });
+
+})
+
+router.post('/register/reqAllSection', function (req, res){
+  console.log("in request all section process");
+  var subjID = req.body.subjectID;
+
+  var sql = "SELECT sec_no FROM section WHERE cid='" + subjID + "'";
   console.log("SQL: " + sql);
 
   con.query(sql, function (err, result, field) {
@@ -60,6 +87,10 @@ router.post('/register/storeToRegIn', function (req, res){
 
     }
   }
+})
+
+router.post('/view/registerdTable',function(req, res){
+  console.log("In viewing register table");
 })
 
 module.exports = router ;
