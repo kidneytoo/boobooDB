@@ -26,6 +26,8 @@ function calculateSection(regSubj) {
 					var sectionl = parseInt(registSubject_before[i].sectionl);
 					var sectionExisting;
 					var sect = [];
+					var subjName = ''; //ชื่อวิชา
+
 
 					var response = await axios.post('http://localhost:8888/student/register/req', {"subject":registSubject_before[i].subjectID});
 
@@ -59,7 +61,7 @@ function calculateSection(regSubj) {
 					}
 
 					console.log(sect);
-					registSubject_after.push({subjectID:subject,section:sect});
+					registSubject_after.push({subjectID:subject,section:sect,subjectName:subjName});
 
 				} catch(e){
 					console.log("Catch in reqAllSection")
@@ -113,6 +115,7 @@ export default class RegistConfirm extends React.Component {
 			<thead>
 			<td>ลำดับ</td>
 			<td>รหัสวิชา</td>
+			<td>ชื่อวิชา</td>
 			<td>Section</td>
 			</thead>
 			<tbody>
@@ -120,6 +123,7 @@ export default class RegistConfirm extends React.Component {
 				<tr>
 				<td><h4>{idx+1}</h4></td>
 				<td>{registSubj.subjectID}</td>
+				<td>{registSubj.subjectName}</td>
 				<td>{registSubj.section.join()}</td>
 				</tr>
 			))}

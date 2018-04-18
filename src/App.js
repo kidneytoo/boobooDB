@@ -4,6 +4,7 @@ import Register from './page/Register';
 import Home from './page/Home';
 import AddSubject from './page/AddSubject';
 import RegistConfirm from './page/RegistConfirm'
+import RegistWait from './page/RegistWait'
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -49,6 +50,7 @@ export default class App extends React.Component {
 					<div className = 'menuChoice'>
 						<button onClick={() => this.changeWindow(<Register changeWindow={this.changeWindow} studentID={this.state.studentID} backWindow={this.backWindow} goHome={this.goHome}/>)}>ลงทะเบียนเรียน</button>
 						<button onClick={() => this.changeWindow(<AddSubject />)}>เพิ่มรายวิชา/เปลี่ยนตอนเรียน</button>
+						<button onClick={() => this.changeWindow(<RegistWait studentID={this.state.studentID} />)}>ผลการแสดงความจำนงการลงทะเบียนเรียน</button>
 					</div>
 				</div>
 				<div className = 'displayScreen'>
