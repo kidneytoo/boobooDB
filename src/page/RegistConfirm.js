@@ -1,76 +1,134 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import $ from 'jquery'
+import _ from 'lodash'
+
+var t;
+var axios = require('axios');
+
 
 function calculateSection(regSubj) {
-		var registSubject_before = regSubj;
-		var registSubject_after = [];
+	console.log("CALLLLL");
+	var registSubject_before = regSubj;
+	var registSubject_after = [];
 
-		//ถ้าเช็คว่ามี Section อะไรบ้างจาก Database ได้จะดี
-
+	return new Promise(async (resolve, reject) => {
 		for (var i = 0; i < registSubject_before.length ; i++) {
-			var sect = [];
-			if(registSubject_before[i].oper == "only") {
-				sect.push(registSubject_before[i].sectionf);
-			}
-			else if(registSubject_before[i].oper == "or") {
-				sect.push(registSubject_before[i].sectionf);
-				sect.push(registSubject_before[i].sectionl);
-			}
-			else if(registSubject_before[i].oper == "to") {
-				for(var j = registSubject_before[i].sectionf ; j <= registSubject_before[i].sectionl ; j++) {
-					sect.push(j)
+			console.log("come");
+
+			// add existing subject's section to sectionExisting
+
+			await (async (i) => {
+				try{
+					var subject = registSubject_before[i].subjectID;
+					var oper = registSubject_before[i].oper;
+					var sectionf = parseInt(registSubject_before[i].sectionf);
+					var sectionl = parseInt(registSubject_before[i].sectionl);
+					var sectionExisting;
+					var sect = [];
+
+					var response = await axios.post('http://localhost:8888/student/register/req', {"subject":registSubject_before[i].subjectID});
+
+					console.log('req_allSection success - data:');
+					sectionExisting = response.data.data ;
+					console.log(sectionExisting);
+					console.log(response.data.msg);
+
+					var checkSec = (section) => {
+						return sectionExisting.reduce((acc, it) => {
+							if(it.sec_no == section) return true;
+							return acc;
+						}, false)
+					};
+
+					if(oper == "only" && checkSec(sectionf)) {
+						sect.push(sectionf);
+					}
+					else if(oper == "or") {
+						if(checkSec(sectionf))
+							sect.push(sectionf);
+						if(checkSec(sectionl))
+							sect.push(sectionl);
+					}
+					else if(oper == "to") {
+						for(var j = sectionf ; j <= sectionl ; j++) {
+							if(checkSec(j))
+								sect.push(j)
+						}
+
+					}
+
+					console.log(sect);
+					registSubject_after.push({subjectID:subject,section:sect});
+
+				} catch(e){
+					console.log("Catch in reqAllSection")
 				}
-			}
-			registSubject_after.push({subjectID:registSubject_before[i].subjectID,section:sect});
+			})(i);
 		}
+		resolve("success");
+	}).then((successMeg) => {
 		console.log(registSubject_after);
 		return registSubject_after;
-	}
+	})
+
+	//ถ้าเช็คว่ามี Section อะไรบ้างจาก Database ได้จ
+
+}
 
 export default class RegistConfirm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			studentID: this.props.studentID,
-			registSubject: calculateSection(this.props.registSubject),
 		};
+		setTimeout(async () => {
+			let response = await calculateSection(this.props.registSubject)
+			this.setState({
+				registSubject: response
+			})
+		}, 0);
 	}
 
 	confirmRegist() {
 
 		//บันทึกรายการลง Database
-
+		console.log(this.state.registSubject);
+		$.post('http://localhost:8888/student/register/storeToRegIn', this.state , function(data , status){
+			console.log('req_allSection success - data:');
+			console.log(data);
+			alert("Storing successful");
+		});
 
 		this.props.setInit();
 		this.props.goHome();
 	};
-
 	render() {
 		return(
 			<div className='registConfirmContainer'>
-				<h1>ยืนยันการลงทะเบียนเรียน</h1>
-				<p>รหัสนิสิต : {this.props.studentID}</p>
+			<h1>ยืนยันการลงทะเบียนเรียน</h1>
+			<p>รหัสนิสิต : {this.props.studentID}</p>
 			<div className='registConfirmTable'>
-				<table>
-					<thead>
-						<td>ลำดับ</td>
-						<td>รหัสวิชา</td>
-						<td>Section</td>
-					</thead>
-					<tbody>
-						{this.state.registSubject.map((registSubj,idx) => (
-							<tr>
-								<td><h4>{idx+1}</h4></td>
-								<td>{registSubj.subjectID}</td>
-								<td>{registSubj.section.join()}</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
+			<table>
+			<thead>
+			<td>ลำดับ</td>
+			<td>รหัสวิชา</td>
+			<td>Section</td>
+			</thead>
+			<tbody>
+			{_.get(this.state, 'registSubject', []).map((registSubj,idx) => (
+				<tr>
+				<td><h4>{idx+1}</h4></td>
+				<td>{registSubj.subjectID}</td>
+				<td>{registSubj.section.join()}</td>
+				</tr>
+			))}
+			</tbody>
+			</table>
 			</div>
 			<div>
-				<button onClick={this.props.backWindow}>ย้อนกลับ</button>
-				<button onClick={this.confirmRegist.bind(this)}>บันทึก</button>
+			<button onClick={this.props.backWindow}>ย้อนกลับ</button>
+			<button onClick={this.confirmRegist.bind(this)}>บันทึก</button>
 			</div>
 			</div>
 

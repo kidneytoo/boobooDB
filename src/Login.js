@@ -53,11 +53,12 @@ export default class Login extends React.Component {
 		// alert('http://localhost:8888/checkAuthentificate/' + this.state.person);
 		$.post('http://localhost:8888/checkAuthentificate/' + this.state.person, this.state , function(data , status){
 			console.log('checkAunthentification data: ' + data + ', status: ' + status);
+			alert(data);
 			if(data == "Login successful"){
 				goToStudent();
 			}
-			else{
-				alert("Incorrect username or password");
+			else if(data == "Incorrect username or password"){
+				// do nothing - just alert
 			}
 		});
 	}

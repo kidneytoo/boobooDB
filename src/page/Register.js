@@ -4,7 +4,7 @@ import RegistConfirm from './RegistConfirm'
 import $ from 'jquery';
 
 var studID = '';
-var registSj = [{subjectID:'',sectionf:null,oper:"only",sectionl:null}]; 
+var registSj = [{subjectID:'',sectionf:null,oper:"only",sectionl:null}];
 
 export default class Register extends React.Component {
 	constructor(props) {
@@ -68,10 +68,10 @@ export default class Register extends React.Component {
   	}
 
   	handleSubmit = (evt) => {
-  		$.post('http://localhost:8888/send', this.state , function(data , status){
-			  console.log('data: ' + data + ', status: ' + status);
-			  alert('From server => data: ' + data + ', status: ' + status);
-			});
+  		// $.post('http://localhost:8888/send', this.state , function(data , status){
+			//   console.log('data: ' + data + ', status: ' + status);
+			//   alert('From server => data: ' + data + ', status: ' + status);
+			// });
 
     	studID = this.state.studentID;
     	registSj = this.state.registSubject;
@@ -129,7 +129,7 @@ export default class Register extends React.Component {
 						</div>
 					</div>
 					<div><button type="button" disabled = {this.state.registSubject.length >=10} onClick={this.handleAddRegistSubject} className="small">เพิ่มวิชาที่จะลงทะเบียน</button></div>
-					<div><input type="submit"></input></div>
+					<div><input type="submit" onclick = {this.handleSubmit}></input></div>
 				</form>
 			</div>
 

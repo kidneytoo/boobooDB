@@ -29,7 +29,7 @@ router.post('/student', function (req, res){
       res.send("Login successful");
     }
     else{
-
+      res.send("Have problem : There are several ID same as this.")
     }
 
   });

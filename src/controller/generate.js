@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var mysql = require('../mysqlOnlyNott');
+var { con } = require('../server');
 
 router.get('/database', function (req, res, next) {
   const queries = [
