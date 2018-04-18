@@ -2,6 +2,43 @@ var app = require('express')
 var router = app.Router();
 var { con } = require('../server');
 
+router.post('/register/reqRegisteredData', function(req, res){
+  var sid = req.body.sid;
+
+  var sql = "SELECT cid,sec_no FROM reg_in WHERE status='registered'";
+  console.log("SQL: " + sql);
+
+  var preData ;
+  var data = [];
+
+  con.query(sql, function (err, result, field) {
+    console.log("DATAAAAAA");
+    if (err){
+      console.log("ERROR");
+      throw err;
+    }
+    console.log(result);
+
+    if(result.length == 0){
+      console.log("There is no this subject");
+      res.send({"msg" : "There is no this subject"});
+    }
+    else{
+      preData = result;
+      // console.log("success");
+      // res.send({  "msg" : "success" ,
+      //             "data" : result
+      //           });
+    }
+  });
+
+  // var
+  // preData.map(data, idx) => {
+  //
+  // }
+
+})
+
 router.post('/register/reqSubjectName', function (req, res){
   var subjID = req.body.subjectID;
 
