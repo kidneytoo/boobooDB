@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery'
 import _ from 'lodash'
 
+<<<<<<< HEAD
 var axios = require('axios')
 
 // ตรงนี้น่าจะเป็น function ดึงข้อมูลนะ ป่ะ
@@ -23,12 +24,22 @@ function getRegistData(studentID) {
 }
 
 // ไป setState เป็น registSubject ด้วยจะดี
+=======
+
+// ตรงนี้น่าจะเป็น function ดึงข้อมูลนะ ป่ะ
+function getRegistSubjec() {
+	
+}
+
+// ไป setState เป็น registSubject ด้วยจะดี 
+>>>>>>> 42d6cb58b666b2bcc2faeb71b0ddfa0c8ab4fc3f
 
 
 export default class RegistWait extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+<<<<<<< HEAD
 			studentID: this.props.studentID,
 		};
 		setTimeout(async () => {
@@ -39,6 +50,10 @@ export default class RegistWait extends React.Component {
 				registSubject: response
 			})
 		}, 0);
+=======
+			studentID: this.props.studentID
+		};
+>>>>>>> 42d6cb58b666b2bcc2faeb71b0ddfa0c8ab4fc3f
 	}
 
 	render() {
@@ -57,9 +72,15 @@ export default class RegistWait extends React.Component {
 							{_.get(this.state, 'registSubject', []).map((registSubj,idx) => (
 								<tr>
 									<td><h4>{idx+1}</h4></td>
+<<<<<<< HEAD
 									<td>{registSubj.cid}</td>
 									<td>{registSubj.subjectName}</td>
 									<td>{registSubj.sec_no}</td>
+=======
+									<td>{registSubj.subjectID}</td>
+									<td>{registSubj.subjectName}</td>
+									<td>{registSubj.section.join()}</td>
+>>>>>>> 42d6cb58b666b2bcc2faeb71b0ddfa0c8ab4fc3f
 								</tr>
 							))}
 						</tbody>
@@ -73,4 +94,8 @@ export default class RegistWait extends React.Component {
 
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 42d6cb58b666b2bcc2faeb71b0ddfa0c8ab4fc3f

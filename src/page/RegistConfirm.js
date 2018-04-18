@@ -122,7 +122,7 @@ export default class RegistConfirm extends React.Component {
 			<thead>
 			<td>ลำดับ</td>
 			<td>รหัสวิชา</td>
-			<td>รหัสวิชา</td>
+			<td>ชื่อวิชา</td>
 			<td>Section</td>
 			</thead>
 			<tbody>
