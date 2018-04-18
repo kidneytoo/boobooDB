@@ -5,6 +5,7 @@ import Home from './page/Home';
 import AddSubject from './page/AddSubject';
 import RegistConfirm from './page/RegistConfirm'
 import RegistWait from './page/RegistWait'
+import dog from'./image/dog.svg'
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -45,6 +46,7 @@ export default class App extends React.Component {
 		return (
 			<div className = 'regAll'>
 				<div className = 'menuBar'>
+					<img src={dog} className='dogApp' />
 					<h1>BooBooDB</h1>
 					<p>ระบบลงทะเบียนเรียนออนไลน์ของจุฬาฯ</p>
 					<div className = 'menuChoice'>

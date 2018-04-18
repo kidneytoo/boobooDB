@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import createHistory from "history/createBrowserHistory"
 import App from './App'
 import $ from 'jquery'
+import dog from'./image/dog.svg'
 
 var studentLogin = null;
 function goToStudent(e) {
@@ -68,12 +69,15 @@ export default class Login extends React.Component {
 	render() {
 		return(
 			<div className='loginContainer'>
+				<img src={dog} className='dogLogin'/>
+				<h1>BoobooDB</h1>
+				<p>ระบบลงทะเบียนเรียนออนไลน์ของจุฬาฯ</p>
 				<form>
-					<div>
+					<div className='loginLabel'>
 						<label for="sid">รหัสประจำตัว</label>
 						<input value={this.state.studentID} onChange={this.handleStudentIDchange} className="sid" type="text" placeholder="10 หลัก" required></input>
 					</div>
-					<div>
+					<div className='loginLabel'>
 						<label for="pass">รหัสผ่าน</label>
 						<input value={this.state.password} onChange={this.handlePasswordchange} className="pass" type="password" required></input>
 					</div>
