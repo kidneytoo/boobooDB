@@ -22,7 +22,7 @@ router.post('/register/reqRegisteredData', function(req, res){
       try{
       await (
           new Promise( async (resolve, reject) => {
-            var sql = "SELECT cid,sec_no FROM reg_in WHERE status='registered'";
+            var sql = "SELECT cid,sec_no FROM reg_in WHERE status='registered' AND sid='" + sid + "'";
             console.log("SQL: " + sql);
             con.query(sql, function (err, result, field) {
               console.log("DATAAAAAA");
@@ -126,12 +126,12 @@ router.post('/register/reqSubjectName', function (req, res){
       console.log("ERROR");
       throw err;
     }
-    console.log(result[0].cname);
     if(result.length == 0){
       console.log("There is no this subject");
       res.send({"msg" : "There is no this subject"});
     }
     else{
+      console.log(result[0].cname);
       console.log("success");
       res.send({  "msg" : "success" ,
                   "data" : result[0].cname
