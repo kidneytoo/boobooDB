@@ -12,7 +12,8 @@
     "mysql": "github:mysqljs/mysql",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "sync-mysql": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

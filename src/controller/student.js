@@ -1,42 +1,117 @@
 var app = require('express')
 var router = app.Router();
 var { con } = require('../server');
+var mysql = require('sync-mysql');
+
+var scon = new mysql({
+  host     : '127.0.0.1',
+  user     : 'root',
+  password : 'root',
+  database : 'booboodb',
+  port : '3306'
+})
 
 router.post('/register/reqRegisteredData', function(req, res){
   var sid = req.body.sid;
 
-  var sql = "SELECT cid,sec_no FROM reg_in WHERE status='registered'";
-  console.log("SQL: " + sql);
-
   var preData ;
-  var data = [];
+  var data;
+  (async() => {
+    var t = await(new Promise( async (resolve, reject) => {
+      // await( async() => {
+      try{
+      await (
+          new Promise( async (resolve, reject) => {
+            var sql = "SELECT cid,sec_no FROM reg_in WHERE status='registered'";
+            console.log("SQL: " + sql);
+            con.query(sql, function (err, result, field) {
+              console.log("DATAAAAAA");
+              if (err){
+                console.log("ERROR");
+                throw err;
+              }
+              console.log("RESULT");
+              console.log(result);
 
-  con.query(sql, function (err, result, field) {
-    console.log("DATAAAAAA");
-    if (err){
-      console.log("ERROR");
-      throw err;
+              if(result.length == 0){
+                console.log("There is no this subject");
+                reject("ERROR in query");
+              }
+              else{
+                preData = result;
+                resolve("success");
+              }
+            })
+          }).then((msg) => {
+            console.log("PRE DATA");
+            console.log(preData);
+            var prevSubj = {"cid":'1' , "cname":'1' , 'sec_no':[]};
+            data = [];
+
+            var addData = (cid,sec_no) =>{
+              prevSubj = {"cid":'1' , "cname":'1' , 'sec_no':[]};
+
+              prevSubj.cid = cid;
+              prevSubj.sec_no = [sec_no];
+
+              var sql = "SELECT cname FROM course WHERE cid='" + cid + "'";
+              console.log("SQL: " + sql);
+                    var result = scon.query(sql);
+
+                    if(result.length == 0){
+                      console.log("There is no this subject");
+                      throw err;
+                    }
+                    else{
+                      console.log("add cname success");
+                      prevSubj.cname = result[0].cname;
+                    }
+            };
+
+            preData.forEach((datain, idx) => {
+              if(idx==0){
+                console.log("1");
+                addData(datain.cid, datain.sec_no);
+              }
+              else if(datain.cid == prevSubj.cid){
+                console.log("2");
+                prevSubj.sec_no.push(datain.sec_no);
+              }
+              else{
+                console.log("3");
+                console.log(data);
+                let t = prevSubj;
+                data.push(t);
+                console.log(data);
+                addData(datain.cid, datain.sec_no);
+                console.log(data);
+              }
+              if(idx == preData.length-1){
+                let t = prevSubj;
+                data.push(t);
+              }
+              console.log(data);
+            })
+            console.log("ForEach end - DaTa :");
+            console.log(data);
+          }).catch((e) => {
+            console.log(e);
+            throw e;
+          })
+      );
+    }catch(e){
+      console.log(e);
+      throw e;
     }
-    console.log(result);
-
-    if(result.length == 0){
-      console.log("There is no this subject");
-      res.send({"msg" : "There is no this subject"});
-    }
-    else{
-      preData = result;
-      // console.log("success");
-      // res.send({  "msg" : "success" ,
-      //             "data" : result
-      //           });
-    }
-  });
-
-  // var
-  // preData.map(data, idx) => {
-  //
-  // }
-
+      console.log("QUERY SUCCESS");
+      resolve("QUERY SUCCESS");
+    }).then((successMsg) => {
+      console.log("DATA OUT");
+      console.log(data);
+      return data;
+    }));
+    await res.send(t);
+  })();
 })
 
 router.post('/register/reqSubjectName', function (req, res){

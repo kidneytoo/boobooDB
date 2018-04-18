@@ -5,10 +5,7 @@ import Home from './page/Home';
 import AddSubject from './page/AddSubject';
 import RegistConfirm from './page/RegistConfirm'
 import RegistWait from './page/RegistWait'
-<<<<<<< HEAD
-=======
 import dog from'./image/dog.svg'
->>>>>>> 42d6cb58b666b2bcc2faeb71b0ddfa0c8ab4fc3f
 
 export default class App extends React.Component {
 	constructor(props) {
